@@ -17,7 +17,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 /// Owner can withdraw ETH or ERC20. 
 /// GLHF 
 contract EmergencyStash is Ownable {
-    uint256 timedelay = 0;
+    uint256 timedelay = 10 minutes;
     bytes32 private lock;
     mapping(bytes32 => address) commiters;
     mapping(bytes32 => uint256) commitsTime;
