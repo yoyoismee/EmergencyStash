@@ -17,7 +17,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 /// Owner can withdraw ETH or ERC20. 
 /// GLHF 
 contract EmergencyStash is Ownable {
-    uint256 timedelay = 10 minutes;
+    uint256 timedelay = 0;
     bytes32 private lock;
     mapping(bytes32 => address) commiters;
     mapping(bytes32 => uint256) commitsTime;
@@ -39,6 +39,7 @@ contract EmergencyStash is Ownable {
 
     /// @notice reclaim ownership
     function open(string calldata password, string calldata salt) public {
+        require(owner() == address(0));
         bytes32 check = keccak256(abi.encodePacked(password, salt));
         require(commiters[check] == msg.sender, "pls commit");
         require(block.timestamp - commitsTime[check] > timedelay, "too soon");
